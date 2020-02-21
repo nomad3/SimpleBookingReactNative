@@ -1,55 +1,106 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Picker, Text } from 'react-native'
 import { IconButton, TextInput, FAB } from 'react-native-paper'
 import Header from '../components/Header'
 
+const DATA_ROOMS = [
+  {
+    id: '0',
+    roomName: 'Select a Room Rype',
+    price: 0,
+  },
+  {
+    id: '1',
+    roomName: 'Music',
+    price: 35,
+  },
+  {
+    id: '2',
+    roomName: 'Video',
+    price: 50, 
+  },
+  {
+    id: '3',
+    roomName: 'Theatre',
+    price: 70,
+  },
+];
+
+var options =["Home","Savings","Car","GirlFriend"];
+
+
 function AddBooking({ navigation }) {
-  const [bookingTitle, setBookingTitle] = useState('')
+  const [bookingRoom, setBookingRoom] = useState([])
   const [bookingNoteValue, setBookingNoteValue] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
 
   function onSaveBooking() {
-    navigation.state.params.addBooking({ bookingTitle, bookingNoteValue })
+    navigation.state.params.addBooking({ bookingRoom, bookingNoteValue, startDate, endDate })
     navigation.goBack()
   }
   return (
     <>
-      <Header titleText='Add a new Booking' />
+      <Header titleText="Add a new Booking" />
       <IconButton
-        icon='close'
-        size={25}
-        color='white'
+        icon="close"
+        size={35}
+        color="white"
         onPress={() => navigation.goBack()}
         style={styles.iconButton}
       />
       <View style={styles.container}>
+        <Picker
+          selectedValue={bookingRoom}
+          onValueChange={
+            bookingRoom => setBookingRoom(bookingRoom)
+          }
+        >
+          {DATA_ROOMS.map((item, index) => {
+            return (
+              <Picker.Item
+                key={index}
+                label={`${item.roomName}`}
+                value={`${item.roomName}`}
+              />
+            );
+          })}
+        </Picker>
         <TextInput
-          label='Add Your Name'
-          value={bookingTitle}
-          mode='outlined'
-          onChangeText={setBookingTitle}
+          label="Select Start Date"
+          value={startDate}
+          mode="outlined"
+          onChangeText={setStartDate}
           style={styles.title}
         />
         <TextInput
-          label='Add Notes Here'
+          label="Select End Date"
+          value={endDate}
+          mode="outlined"
+          onChangeText={setEndDate}
+          style={styles.title}
+        />
+        <TextInput
+          label="Add Notes Here"
           value={bookingNoteValue}
           onChangeText={setBookingNoteValue}
-          mode='flat'
+          mode="flat"
           multiline={true}
           style={styles.text}
           scrollEnabled={true}
-          returnKeyType='done'
+          returnKeyType="done"
           blurOnSubmit={true}
         />
         <FAB
           style={styles.fab}
-          small
-          icon='check'
-          disabled={setBookingTitle == '' ? true : false}
+          medium
+          icon="check"
+          disabled={setBookingRoom == "" ? true : false}
           onPress={() => onSaveBooking()}
         />
       </View>
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -69,6 +120,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20
+  },
+  subTitle: {
+    fontSize: 24,
   },
   text: {
     height: 300,

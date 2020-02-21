@@ -3,7 +3,6 @@ import { StyleSheet, View, FlatList } from 'react-native'
 import { Text, FAB, List } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { addbooking, deletebooking } from '../redux/bookingsApp'
-
 import Header from '../components/Header'
 
 function ViewBookings({ navigation }) {
@@ -25,9 +24,9 @@ function ViewBookings({ navigation }) {
             data={bookings}
             renderItem={({ item }) => (
               <List.Item
-                title={item.booking.bookingTitle}
-                description={item.booking.bookingValue}
-                descriptionNumberOfLines={1}
+                title={item.booking.bookingRoom}
+                description={item.booking.startDate}
+                descriptionNumberOfLines={3}
                 titleStyle={styles.listTitle}
                 onPress={() => deleteBooking(item.id)}
               />
