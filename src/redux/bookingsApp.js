@@ -27,27 +27,11 @@ export function deletebooking(id) {
 
 // Helper Functions
 
-function applyStartTimer(state) {
-	return {
-		...state,
-		isPlaying: true
-	};
-}
-
-function applyRestartTimer(state) {
-	return {
-		...state,
-		isPlaying: false,
-		elapsedTime: 0,
-		timerDuration: TIMER_DURATION
-	};
-}
-
 function checkBookingDuration(state) {
-	if (state.bookingDuration < TIMER_DURATION) {
+	if (state.bookingDuration < BOOKING_DURATION) {
 		return {
 			...state,
-			elapsedTime: state.elapsedTime + 1
+			// elapsedTime: state.elapsedTime + 1
 		};
 	} else {
 		return {
